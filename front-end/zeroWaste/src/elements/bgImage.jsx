@@ -8,14 +8,14 @@ import ImageUpload from './uploadImage';
 const screenHeight = Dimensions.get('window').height;
   const screenWidth = Dimensions.get('window').width
 
-  const BackgroundImg = () => {
+  const BackgroundImg = ({socket}) => {
     const mainState = useState(Object)
     const [unused, setState, stateRf] = mainState
 
     const openFade=()=>{
         console.log(name)
         setState(p=>({...p,...{
-            imageUpload: <ImageUpload ImageName={name}/>,
+            imageUpload: <ImageUpload socket={socket} ImageName={name}/>,
         }})) 
     }
 

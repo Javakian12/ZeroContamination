@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {Box, Button, Typography, Grid} from "@mui/material"
-import { io } from 'socket.io-client';
+import {io} from 'socket.io-client'
+import App from "../../App";
 
-const UploadAndDisplayImage = () => {
+const UploadAndDisplayImage = ({}) => {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const mainState = useState(Object)
   const [unused, setState, stateRf] = mainState
-
-  const URLF = "http://localhost:19006";
-  const socket = io();
+  const io = require("socket.io-client");
 
     useEffect(()=>{
         setState(p=>({...p,...{
@@ -18,9 +17,9 @@ const UploadAndDisplayImage = () => {
     },[selectedImage])
 
     const submitItem=()=>{
-        io.emit("uploadF", selectedImage, (status) => {
+      socket.emit("uploadF", selectedImage, (status) => {
            console.log(status);
-        });
+        }); 
      console.log("fire")
         setState(p=>({...p,...{
             submit: <Box bgcolor='red' width='100%'><Typography>Submitted file, waiting for response...</Typography></Box>
