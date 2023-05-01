@@ -41,7 +41,6 @@ const UploadAndDisplayImage = ({}) => {
           tempLink.setAttribute('download', 'classification.jpg');
           tempLink.click();
         }); 
-     console.log("fire")
         setState(p=>({...p,...{
             submit: <Box bgcolor='red' width='100%'><Typography>Submitted file, waiting for response...</Typography></Box>
         }}))
@@ -64,7 +63,6 @@ const UploadAndDisplayImage = ({}) => {
           <Button sx={{boxShadow:'3', bgcolor: 'white'}} onClick={() => setSelectedImage(null)}>Remove</Button>
           </Box>
       )}
-        {stateRf?.current?.submit}
       <br />
       
       <input
@@ -75,6 +73,7 @@ const UploadAndDisplayImage = ({}) => {
           setSelectedImage(event.target.files[0]);
         }}
       />
+      {stateRf?.current?.submit}
       
     </Box>
     
