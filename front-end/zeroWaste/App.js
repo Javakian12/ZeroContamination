@@ -5,6 +5,7 @@ import { Text, View, TextInput, ImageBackground, StyleSheet, Dimensions } from '
 import BackgroundImg from './src/elements/bgImage';
 import useState from 'react-usestateref'
 import { Typography, Box } from '@mui/material';
+import { RecoilRoot } from 'recoil';
 
 
 export default function App() {
@@ -12,16 +13,6 @@ export default function App() {
   const [unused, setState, stateRf] = mainState 
   //const [isConnected, setIsConnected] = useState(socket.connected);
   const [fooEvents, setFooEvents] = useState([]);
-  const [time, setTime] = useState('fetching')  
-  useEffect(()=>{
-    const socket = io('http://localhost:8080')
-    socket.on('connect', ()=>console.log(socket.id))
-    socket.on('connect_error', ()=>{
-      setTimeout(()=>socket.connect(),5000)
-    })
-   socket.on('time', (data)=>setTime(data))
-   socket.on('disconnect',()=>setTime('server disconnected'))
- },[])
 
   useEffect(()=>{
     console.log(stateRf?.current?.submit)
@@ -29,6 +20,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <RecoilRoot>
       <Box sx={{backgroundColor: "", width: '100%', display:"flex", justifyContent:"center", alignItems:"center"}}>
       <Typography sx={{fontSize:'2.5rem'}}>
       Recycling Classifier & Cardboard Contamination Detection
@@ -36,7 +28,8 @@ export default function App() {
       </Box>
       <StatusBar style="auto" />
       {stateRf?.current?.submit}
-      <BackgroundImg socket={socket}/>
+      <BackgroundImg />
+      </RecoilRoot>
     </View>
   );
 }

@@ -23,6 +23,7 @@
     "react-native-image-picker": "^5.3.1",
     "react-native-web": "~0.18.10",
     "react-usestateref": "^1.0.8",
+    "recoil": "^0.7.7",
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1"
   },

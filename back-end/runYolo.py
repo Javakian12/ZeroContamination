@@ -1,12 +1,14 @@
 import socketio
 
-sio = socketio.Client()
+sio = socketio.Client(reconnection=True, reconnection_attempts=float('inf'))
+
+sio.connect('http://localhost:8080',transports="websocket")
 
 @sio.event
 def connect():
     print('connection established')
 
-@sio.event
+@sio.on("learnReq")
 def my_message(data):
     print('message received with ', data)
     sio.emit('my response', {'response': 'my response'})
@@ -15,5 +17,4 @@ def my_message(data):
 def disconnect():
     print('disconnected from server')
 
-sio.connect('http://localhost:19006')
 sio.wait()
