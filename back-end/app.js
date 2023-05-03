@@ -36,7 +36,7 @@ io.on('connection',(socket)=>{
       console.error(err)
     }
     //perform learning
-    exec(`cd .. && cd yolov7 && python detect.py --weights runs/train/zerowaste-lr0_0001-ep100/weights/best.pt --conf 0.25 --img-size 640 --source inference/images/${name}`, (err, output) => { 
+    exec(`cd .. && cd yolov7 && python detect.py --weights runs/train/zerowaste-lr0_0001-ep100/weights/best.pt --conf 0.25 --save-txt --img-size 640 --source inference/images/${name}`, (err, output) => { 
       // once the command has completed, the callback function is called
       if (err) {
           // log and return if we encounter an error
@@ -51,6 +51,14 @@ io.on('connection',(socket)=>{
           throw err;
         }
         const content = data;
+
+        fs.readFile(`../yolov7/runs/detect/exp/${name}`, function read(err, dataCoord) {
+          if (err) {
+            throw err;
+          }
+          const contentCoord = dataCoord;
+        })
+
         //delete folder where learned image was stored (save space)
         exec(`cd .. && cd yolov7/runs/detect && rmdir /s /q exp && cd .. && cd .. && cd inference/images && del ${name}`, (err, output) => { //if server is running on linux, change this command (rmdir and del)
           // once the command has completed, the callback function is called
