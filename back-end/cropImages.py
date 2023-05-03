@@ -69,8 +69,10 @@ anns = coco.loadAnns (ann_ids)
 # Loop over the annotations and edit the image
 for ann in anns:
   # Get the category name, confidence score, and segmentation mask
-  cat_id = ann ['category_id']
-  cat_name = coco.cats [cat_id] ['name']
+  #cat_id = ann ['category_id'] #if you want to run on all attributes
+  #cat_name = coco.cats [cat_id] ['name'] #if you want to run on all attributes
+  cat_id = 1 #if you want to run on just cardboard
+  cat_name = 'cardboard' #if you want to run on just cardboard
   score = ann.get ('score', 1.0) # use 1.0 as the default score if not found
   segm = ann ['segmentation']
 
