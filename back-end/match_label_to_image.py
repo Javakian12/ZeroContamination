@@ -1,91 +1,68 @@
-# Import os and numpy modules to access files and arrays
 import os
-import numpy as np
-# Import PIL and cv2 modules to handle images and masks
 from PIL import Image
-import cv2
+from PIL import ImageChops
 
-test = 0
+def get_green_box(image):
+    # Convert image to RGBA format
+    rgba_image = image.convert('RGBA')
 
-# Define the folder where the green images (masks) are located
-mask_folder = R"C:\Users\josha\Downloads\images"
+    # Get the dimensions of the image
+    width, height = rgba_image.size
 
-# Define the folder where the other images are located
-img_folder = R"C:\Users\josha\Downloads\Output"
+    # Define the coordinates of the green area
+    # Replace these values with the coordinates of the green area in your images
+    left = 0
+    top = 0
+    right = width // 2
+    bottom = height // 2
 
-# Loop over each file in the mask folder
-for file in os.listdir(mask_folder):
-  # Get the full path of the file
-  file_path = os.path.join(mask_folder, file)
-  # Check if the file is an image by its extension
-  if file_path.endswith(".jpg") or file_path.endswith(".png"):
-    # Get the characters from index 15 to 29 of the file name
-    file_prefix = file[:15]
-    # Find the matching image in the img folder by using the prefix
-    # Try to find the matching image in the img folder by using the prefix
-    try:
-        img_file = [f for f in os.listdir(img_folder) if f[15:30] == file_prefix][0]
-        # Get the full path of the matching image
-        img_file_path = os.path.join(img_folder, img_file)
-        # Proceed with the rest of the code
-    except IndexError:
-        # If no match is found, print a message and skip the file
-        print(f"No matching image found for {file}")
-        continue
-    # Get the full path of the matching image
-    img_file_path = os.path.join(img_folder, img_file)
+    return (left, top, right, bottom)
 
-    # Read the mask image as a numpy array
-    mask_array = np.array(Image.open(file_path))
-    # Convert the mask array to grayscale
-    mask_gray = cv2.cvtColor(mask_array, cv2.COLOR_BGR2GRAY)
-    # Threshold the mask array to get a binary mask of green pixels
-    _, mask_binary = cv2.threshold(mask_gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+def images_match(img_x, img_y, threshold):
+    diff = ImageChops.difference(img_x, img_y)
+    non_black_pixels = 0
+    for pixel in diff.getdata():
+        if pixel != (0, 0, 0):
+            non_black_pixels += 1
+    
+    return non_black_pixels <= threshold
 
-    # Read the other image as a numpy array
-    img_array = np.array(Image.open(img_file_path))
-    # Convert the other image array to grayscale
-    img_gray = cv2.cvtColor(img_array, cv2.COLOR_BGR2GRAY)
-    # Threshold the other image array to get a binary mask of non-black pixels
-    _, img_binary = cv2.threshold(img_gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 
-    # Perform a bitwise AND operation on the two binary masks to get a mask of overlapping pixels
-    overlap_mask = cv2.bitwise_and(mask_binary, img_binary)
-    # Count the number of non-zero pixels in the overlap mask
-    overlap_count = np.count_nonzero(overlap_mask)
-    # Check if there are any overlapping pixels
-    if overlap_count > 20:
-        # Keep the image in the folder
-       # print(f"Keeping {img_file} as it has {overlap_count} green pixels that overlap with non-black pixels.")
-        # Define a new file name with the prefix and the extension
-        new_file = f'{file_prefix}.jpg'
-        # Get the full path of the new file for the mask image
-        new_mask_file_path = os.path.join(mask_folder, new_file)
-        # Get the full path of the new file for the other image
-        new_img_file_path = os.path.join(img_folder, new_file)
-        # Set a counter to keep track of the number of copies
-        counter = 1
-        # Loop until the new file name is unique in the img folder
-        while os.path.exists(new_img_file_path):
-            # Split the file name and extension
-            file_name, file_ext = os.path.splitext(new_file)
-            # Add an underscore and the counter to the file name
-            file_name += f'_{counter}'
-            # Increment the counter
-            counter += 1
-            # Rejoin the file name and extension
-            new_file = file_name + file_ext
-            # Update the file paths
-            new_mask_file_path = os.path.join(mask_folder, new_file)
-            new_img_file_path = os.path.join(img_folder, new_file)
-        # Rename the mask image file
-        os.rename(file_path, new_mask_file_path)
-       # print(f"Renamed {file} to {new_file}")
-        # Rename the other image file
-        os.rename(img_file_path, new_img_file_path)
-       # print(f"Renamed {img_file} to {new_file}")
-    else:
-        # Delete the image from the folder
-        os.remove(img_file_path)
-        print(f"Deleting {img_file} as it has no green pixels that overlap with non-black pixels.")
+green_threshold = 10 # adjust this threshold to control how much green is required for a match
 
+for image_x in os.listdir(R"C:\Users\josha\Downloads\test2"):
+    if image_x.endswith(".png") or image_x.endswith(".jpg"):
+        x_path = os.path.join(R"C:\Users\josha\Downloads\test2", image_x)
+        x_image = Image.open(x_path)
+
+        green_pixels = 0
+        for pixel in x_image.getdata():
+            if pixel == (0, 255, 0):
+                green_pixels += 1
+        for image_y in os.listdir(R"C:\Users\josha\Downloads\test1"):
+            if image_y.endswith(".png") or image_y.endswith(".jpg"):
+                y_path = os.path.join(R"C:\Users\josha\Downloads\test1", image_y)
+                y_image = Image.open(y_path)
+
+                # crop the green area from both images
+                x_crop = x_image.crop(get_green_box(x_image))
+                y_crop = y_image.crop(get_green_box(y_image))
+
+                # compare the two cropped regions
+                if images_match(x_crop, y_crop, green_threshold):
+                    # rename the files if they match
+                    os.rename(x_path, os.path.join(R"C:\Users\josha\Downloads\test2", "match_" + image_x))
+                    os.rename(y_path, os.path.join(R"C:\Users\josha\Downloads\test1", "match_" + image_y))
+                    break
+                else:
+                    # delete the image_y file if no match was found
+                    y_crop_diff = ImageChops.difference(y_crop, Image.new('RGB', y_crop.size, (0, 0, 0)))
+                    if sum(y_crop_diff.getdata()) > 0:
+                        # check if there are at least 10 non-black pixels in the cropped region of image_y
+                        non_black_pixels = 0
+                        for pixel in y_crop_diff.getdata():
+                            if pixel != (0, 0, 0):
+                                non_black_pixels += 1
+                        if non_black_pixels <= green_threshold:
+                            os.remove(y_path)
+                            break

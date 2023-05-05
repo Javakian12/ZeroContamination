@@ -101,8 +101,9 @@ import numpy as np
 from PIL import Image
 import os # import os module to access files and directories
 
+os.chdir(r'C:\Users\josha\Downloads')
 # Load the COCO JSON file
-coco = COCO (R'C:\Users\josha\Downloads\test1\_annotations.coco.json')
+coco = COCO (r'C:\Users\josha\Downloads\test1\_annotations.coco.json')
 
 # Create a dictionary to store the file names and image ids
 file_to_id = {}
@@ -115,7 +116,7 @@ for img in coco.imgs.values():
   file_to_id[file_name] = img_id
 
 # Define the folder where the images are located
-img_folder = R"C:\Users\josha\Downloads\test1"
+img_folder = r'C:\Users\josha\Downloads\test1'
 
 # Loop over each file in the folder
 for file in os.listdir(img_folder):
@@ -145,7 +146,8 @@ for file in os.listdir(img_folder):
       mask = coco.annToMask (ann)
 
       # Read the image as a numpy array
-      img_array = np.array (Image.open (img_file))
+      print(img_file)
+      img_array = np.array (Image.open (img_folder+'\\'+img_file))
 
       # Apply the mask to the image and make the rest of the image black
       masked_img_array = np.where (mask[:, :, np.newaxis] == 1, img_array, 0)
@@ -159,7 +161,7 @@ for file in os.listdir(img_folder):
       #if yes, change name + 1,
       #else make image
       # Define the output folder where the masked images will be saved
-      output_folder = "C:/Users/josha/downloads/Output"
+      output_folder = r'C:\Users\josha\downloads\Output'
       # Get the full path of the new file
       new_file_path = os.path.join(output_folder, new_file)
       # Set a counter to keep track of the number of copies
