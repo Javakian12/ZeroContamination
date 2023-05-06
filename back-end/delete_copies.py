@@ -1,32 +1,15 @@
-'''import os
-
-# define folders
-folder1 = r'C:\Users\josha\Downloads\test2'
-folder2 = r'C:\Users\josha\Downloads\test1'
-
-# get file names in folder1
-file_names = os.listdir(folder1)
-
-# loop through files in folder2
-for file in os.listdir(folder2):
-    # check if file name is in folder1
-    if file not in file_names:
-        # delete file from folder2
-        os.remove(os.path.join(folder2, file))
-        print(f"Deleted file: {file}")'''
-
 
 
 import os
 import shutil
 
 # define folders
-folder1 = r'C:\Users\josha\Downloads\test2'
+folder1 = r'C:\Users\josha\Downloads\tester'
 folder2 = r'C:\Users\josha\Downloads\test1'
 
 
 # Define the path of the output folder
-output_folder = r'C:\Users\josha\Downloads\tester'
+output_folder = r'C:\Users\josha\Downloads\tester_labels'
 
 # Create the output folder if it doesn't exist
 if not os.path.exists(output_folder):

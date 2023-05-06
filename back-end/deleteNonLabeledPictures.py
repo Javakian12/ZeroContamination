@@ -5,10 +5,10 @@
 import os
 
 # Define the source folder where the images to be deleted are located
-source_folder = R"C:\Users\josha\Downloads\Output"
+source_folder = R"C:\Users\josha\Downloads\test1"
 
 # Define the target folder where the images to be matched are located
-target_folder = R"C:\Users\josha\Downloads\images"
+target_folder = R"C:\Users\josha\Downloads\finished_masks"
 
 # Loop through each file in the source folder
 for file in os.listdir(source_folder):
@@ -17,7 +17,7 @@ for file in os.listdir(source_folder):
     # Check if the file is an image by its extension
     if file_path.endswith(".jpg") or file_path.endswith(".png"):
         # Get 15-30 characters of the file name
-        file_prefix = file[15:30]
+        file_prefix = file
         # Set a flag to indicate if the file has a match in the target folder
         match_found = False
         # Loop through each file in the target folder
@@ -27,7 +27,7 @@ for file in os.listdir(source_folder):
             # Check if the target file is an image by its extension
             if target_file_path.endswith(".jpg") or target_file_path.endswith(".png"):
                 # Get the first 15 characters of the target file name
-                target_file_prefix = target_file[:15]
+                target_file_prefix = target_file[15:30]
                 # Compare the prefixes of the source and target files
                 if file_prefix == target_file_prefix:
                     # If they match, set the flag to True and break the loop

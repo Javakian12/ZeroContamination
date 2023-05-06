@@ -29,7 +29,7 @@ def get_overlap(image, mask, filename, oldfilename):
     return overlap_pixels
 
 def delete_file(filename):
-    image_folder_path = R"C:\Users\josha\Downloads\test1" + "\\" + filename
+    image_folder_path = r"C:\Users\josha\Downloads\new_run_images_1" + "\\" + filename
     if os.path.exists(image_folder_path):
         os.remove(image_folder_path)
         print("Deleted File:")
@@ -37,9 +37,9 @@ def delete_file(filename):
         print("-----------------------------")
         
 def move_mask(maskFile):
-    new_mask_folder_path = R"C:\Users\josha\Downloads\finished_masks"
-    mask_folder_path = R"C:\Users\josha\Downloads\test2"
-    if os.path.exists(new_mask_folder_path+'\\' + maskFile):
+    new_mask_folder_path = r"C:\Users\josha\Downloads\finished_masks"
+    mask_folder_path = r"C:\Users\josha\Downloads\new_run_labels_1"
+    if os.path.exists(new_mask_folder_path +"\\" + maskFile):
         print("File already exists!")
     else:
         shutil.move(mask_folder_path + "\\" + maskFile, new_mask_folder_path)
@@ -70,6 +70,8 @@ def crop_overlap(image, mask, imageName):
     mask_folder_path = R"C:\Users\josha\Downloads\test2"
     # Get the width and height of the image
     width, height = image.size
+    # Convert the mask image to "RGB" mode
+    mask = mask.convert("RGB")
     # Loop over all the pixels in the image
     for x in range(width):
         for y in range(height):
@@ -79,7 +81,6 @@ def crop_overlap(image, mask, imageName):
             
             # Print the RGB values of the pixel
             if (r1 == 0 and g1 == 0 and b1 == 0) and (r2 == 0 and g2 == 255 and b2 == 0):
-                #make mask pixels red
                 # Change the pixel at (100, 100) to red
                 mask.putpixel((x, y), (165, 42, 42))
 
@@ -90,7 +91,7 @@ def crop_overlap(image, mask, imageName):
 
 def rename_files(mask, image, newfilename, oldfilename):
     # Set the path to the folder containing the images
-    mask_folder_path = R"C:\Users\josha\Downloads\test2"
+    mask_folder_path = r"C:\Users\josha\Downloads\new_run_labels_1"
     finished_mask_folder_path = r"C:\Users\josha\Downloads\finished_masks"
 
 
@@ -105,6 +106,6 @@ def rename_files(mask, image, newfilename, oldfilename):
 
 if __name__ == "__main__":
     # Set the path to the folder containing the images
-    image_path = R'C:\Users\josha\Downloads\test1'
-    mask_path = R'C:\Users\josha\Downloads\test2'
+    image_path = r'C:\Users\josha\Downloads\new_run_images_1'
+    mask_path = r'C:\Users\josha\Downloads\new_run_labels_1'
     loop_over_folders()
