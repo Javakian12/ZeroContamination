@@ -3,11 +3,13 @@
 ZeroContamination. Yolov7 credit to WongKinYiu, https://github.com/WongKinYiu/yolov7. Segmenter tool credit to https://github.com/GeorgeSeif/Semantic-Segmentation-Suite
 
 Setup:
+
 To setup this tool you need to install Yolov7 and Semantic-Segmentation-Suite-master. Here is the link to Semantic-Segmentation-Suite-master: https://github.com/GeorgeSeif/Semantic-Segmentation-Suite and here is the link to YoloV7: https://github.com/WongKinYiu/yolov7. The weights can be downloaded via the website: https://www.apanagopoulos.com. 
 
 Please note, if you are setting this tool up on a server you need to install the architectures (YoloV7 and Semantic-Segmentation-Suite-master) as well as python and anaconda on the server for this to work correctly. Same goes if you are setting this up on your own local machine, however you will be using localhost instead of a reverse proxy on a server.
 
 Step 1:
+
 Create a file called YoloV7 in the same directory as back-end.
 
 Download YoloV7 to this directory, setup YoloV7 following their guide, then download the weights for YoloV7. This should be in one large zip file that contains FRNN-A and DeepLabV3's weights also. 
@@ -17,6 +19,7 @@ Create a folder named "zerowaste-lr0_0001-ep100" (you can name it something else
 Create a subfolder in this directory called weights, then place the weights in this folder (unzip/decompress them first).
 
 Step 2:
+
 Download the Semantic-Segmentation-Suite-master github repository, and place it in the same directory as back-end.
 
 Create a folder in the Semantic-Segmentation-Suite-master directory named image_test.
@@ -26,6 +29,7 @@ Download and unzip/decompress the FRNNA weights and place them in the image_test
 Place the same class_dict.csv file in a folder called "dataset" in the Semantic-Segmentation-Suite-master directory (create the folder if you don't have it).
 
 Step 3:
+
 Now that you have both architectures downloaded, you need to set them up. Unfortunately both use different versions of python and different ML architectures, so we will have to use Conda. If you want to try, you can download the dependencies for the architectures without using conda, but I don't recommend it as you will have conflicting versions of python downloaded.
 
 Download anaconda, setup a conda environment (name it test), and set the python version to 3.6.3 (this is very important!!!).
@@ -35,6 +39,7 @@ Download the dependencies for Semantic-Segmentation-Suite-master (you can find t
 Now that you have setup this environment, setup YoloV7 by installing the correct dependencies. You don't need to use conda for this, just use your regular console/python shell.
 
 Step 4:
+
 At this point you should be able to run both architectures (YoloV7 and Semantic-Segmentation-Suite-master). We need to edit the back-end files so it is compatible on your machine.
 
 Navagate to the back-end directory and open app.js. The other files are used for specific functions when training the model (data-preprocessing) so these can be ignored for now.
@@ -54,6 +59,7 @@ Make sure that "zerowaste-lr0_0001-ep100" matches the name of the folder you put
 We need to also install the dependencies for react. Navigate to front-end/zeroWaste, and run yarn install. If yarn is not installed, install it using npm then try the command again. For each dependency that yarn says it can't find, run the command: yarn add "dependency name" (replace dependency name with the name of the library you are installing). Do this until it has no more dependency issues.
 
 ✨ Now for the fun stuff ✨
+
 
 Set the origin under the socketIo constructor to your correct hyperlink. You will have to do the same in the front-end directory, where you do "setAppSocket" in uploadImage.jsx under front-end/zeroWaste/src/elements. For good measure, if this isn't a local machine you might want to place this entire useEffect as well as the useEffect that console.log's the socketio status inside of the App.js fole in the zeroWaste folder (this will force the client to connect upon loading the tool via the webapp, versus connecting when they select upload image).
 
