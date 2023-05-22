@@ -3,7 +3,12 @@
 ZeroContamination. Yolov7 credit to WongKinYiu, https://github.com/WongKinYiu/yolov7. Segmenter tool credit to https://github.com/GeorgeSeif/Semantic-Segmentation-Suite
 
 Setup:
-To setup this tool you need to install Yolov7 and Semantic-Segmentation-Suite-master. Here is the link to Semantic-Segmentation-Suite-master: https://github.com/GeorgeSeif/Semantic-Segmentation-Suite and here is the link to YoloV7: https://github.com/WongKinYiu/yolov7. The weights
+To setup this tool you need to install Yolov7 and Semantic-Segmentation-Suite-master. Here is the link to Semantic-Segmentation-Suite-master: https://github.com/GeorgeSeif/Semantic-Segmentation-Suite and here is the link to YoloV7: https://github.com/WongKinYiu/yolov7. The weights can be downloaded via the website: https://www.apanagopoulos.com. 
+
+Step 1:
+Create a file called YoloV7 in the same directory as back-end.
+
+Download YoloV7 to this directory, setup YoloV7 following their guide, then download the weights for YoloV7. This should be in one large zip file that contains FRNN-A and DeepLabV3's weights also. Place the weights in 
 
 
 Credit and License:
