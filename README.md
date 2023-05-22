@@ -7,7 +7,7 @@ To setup this tool you need to install Yolov7 and Semantic-Segmentation-Suite-ma
 
 
 Credit and License:
-This dataset is distributed under the Creative Commons Attribution-NonCommercial 4.0 International License. Click here for the detailed information about the license.
+This dataset is distributed under the Creative Commons Attribution-NonCommercial 4.0 International License. Click here for the detailed information about the license: https://creativecommons.org/licenses/by-nc/4.0/.
 
 This dataset is a derivative work of Zerowaste (http://ai.bu.edu/zerowaste/):
 
