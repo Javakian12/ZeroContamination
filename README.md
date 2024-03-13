@@ -72,6 +72,15 @@ Load the server by opening a shell on your server/device and navigate to the bac
 Make sure you have the folder "runs" in your main directory (this is where the results are stored), and you should be able to run this app! To run, we will use Expo. In the console in the front-end/zeroWaste directory, run "yarn start" or "yarn expo start" then hit "w" for web. The app should load voluntarily.
 
 
+Training
+
+If you would like to re-train the model or add further information to it, you can do so by navigating to the contamination_data folder and downloading the .zip file, or by using this link: [Contamination Data](https://github.com/Javakian12/ZeroContamination/raw/main/contamination_data/zeroWaste_contamination_data.zip)
+
+Download the class_dict.csv file as well if you plan on running a segmentation model: [class_dict]()
+
+At this point, follow the training guidlines as described in the Yolo repository, replacing their data with this folder. Make sure to edit the 
+
+
 
 
 Credit and License:
