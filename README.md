@@ -76,6 +76,8 @@ Training
 
 If you would like to re-train the model or add further information to it, you can do so by navigating to the contamination_data folder and downloading the .zip file, or by using this link: [Contamination Data](https://github.com/Javakian12/ZeroContamination/raw/main/contamination_data/zeroWaste_contamination_data.zip)
 
+The original ZeroWaste dataset can also be found here: [ZeroWaste Dataset](https://ai.bu.edu/zerowaste/#dataset)
+
 Download the class_dict.csv file as well if you plan on running a segmentation model: [class_dict](https://github.com/Javakian12/ZeroContamination/raw/main/contamination_data/class_dict.csv)
 
 At this point, follow the training guidlines as described in the Yolo repository, replacing their data with this folder. Make sure to edit the .yaml file with the correct paths to the train, test, and val folders inside of contamination_data, as well as edit the number of classes and names. This should look something like:
