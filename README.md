@@ -76,12 +76,36 @@ Training
 
 If you would like to re-train the model or add further information to it, you can do so by navigating to the contamination_data folder and downloading the .zip file, or by using this link: [Contamination Data](https://github.com/Javakian12/ZeroContamination/raw/main/contamination_data/zeroWaste_contamination_data.zip)
 
-Download the class_dict.csv file as well if you plan on running a segmentation model: [class_dict]()
+Download the class_dict.csv file as well if you plan on running a segmentation model: [class_dict](https://github.com/Javakian12/ZeroContamination/raw/main/contamination_data/class_dict.csv)
 
-At this point, follow the training guidlines as described in the Yolo repository, replacing their data with this folder. Make sure to edit the 
+At this point, follow the training guidlines as described in the Yolo repository, replacing their data with this folder. Make sure to edit the .yaml file with the correct paths to the train, test, and val folders inside of contamination_data, as well as edit the number of classes and names. This should look something like:
 
+```
+train: zeroWaste_contamination_data/train/images
+val: zeroWaste_contamination_data/valid/images
+test: zeroWaste_contamination_data/test/images
 
+nc: 4
+names: ['cardboard', 'metal', 'rigid_plastic', 'soft_plastic']
+```
 
+Depending on the model used, you may have to re-name the label folders to the appropriate name. Check the example data the model provides to see the correct structure (for example, some segmentation models want the labels folder to be labeled "train_labels", "test_labels", and "val_labels").
+
+After the data is set up correctly, follow their steps to run and you will have a newly trained model! 
+
+To integrate the model in the React App:
+
+1. Place the desired model in the root folder of the project and place the trained weights inside the model in the correct spot (each model has its own unique structure). 
+
+2. Change the app.js file on the back-end folder. Do a control-f (mac is command-f), and type in "exec". This will allow you to find every spot the model is called. Change the "--weights" flag, putting in your link to the desired weights. Make sure to adjust the other hyperparameters as desired as well. As described earlier, this App uses a semantic segmentation model, so if you want to utilize your own model, you must change the "exec()" command that is inside of the code to point to your model.
+
+Note that the server uses the following structure: 
+
+Image Detection -> Box crop -> Semantic Segmentation -> Pixel Count (Contamination Ratio)
+
+If you desire to change this structure, the app.js code must be called in a different order, or else it will **Break** the pipeline. This isn't too hard to do, with a little bit of Node.js and Javascript knowledge, this function on app.js can be re-written pretty easily. After making these adjustments, the file should save on the server, and the front-end can download the results there.
+
+Happy Coding!
 
 Credit and License:
 Copyright (c) 2023 Joshua Avakian.
