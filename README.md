@@ -10,53 +10,53 @@ Please note, if you are setting this tool up on a server you need to install the
 
 Step 1:
 
-Create a file called YoloV7 in the same directory as back-end.
+1. Create a file called YoloV7 in the same directory as back-end.
 
-Download YoloV7 to this directory, setup YoloV7 following their guide, then download the weights for YoloV7. This should be in one large zip file that contains FRNN-A and DeepLabV3's weights also. 
+2. Download YoloV7 to this directory, setup YoloV7 following their guide, then download the weights for YoloV7. This should be in one large zip file that contains FRNN-A and DeepLabV3's weights also. 
 
-Create a folder named "zerowaste-lr0_0001-ep100" (you can name it something else if you like) and place this in the YoloV7 yolov7/runs/train/ directory.
+3. Create a folder named "zerowaste-lr0_0001-ep100" (you can name it something else if you like) and place this in the YoloV7 yolov7/runs/train/ directory.
 
-Create a subfolder in this directory called weights, then place the weights in this folder (unzip/decompress them first).
+4. Create a subfolder in this directory called weights, then place the weights in this folder (unzip/decompress them first).
 
 Step 2:
 
-Download the Semantic-Segmentation-Suite-master github repository, and place it in the same directory as back-end.
+1. Download the Semantic-Segmentation-Suite-master github repository, and place it in the same directory as back-end.
 
-Create a folder in the Semantic-Segmentation-Suite-master directory named image_test.
+2. Create a folder in the Semantic-Segmentation-Suite-master directory named image_test.
 
-Download and unzip/decompress the FRNNA weights and place them in the image_test folder, as well as the class_dict.csv file in this same folder (this file can be downloaded off of the github repository under the class_dict folder).
+3. Download and unzip/decompress the FRNNA weights and place them in the image_test folder, as well as the class_dict.csv file in this same folder (this file can be downloaded off of the github repository under the class_dict folder).
 
-Place the same class_dict.csv file in a folder called "dataset" in the Semantic-Segmentation-Suite-master directory (create the folder if you don't have it).
+4. Place the same class_dict.csv file in a folder called "dataset" in the Semantic-Segmentation-Suite-master directory (create the folder if you don't have it).
 
 Step 3:
 
 Now that you have both architectures downloaded, you need to set them up. Unfortunately both use different versions of python and different ML architectures, so we will have to use Conda. If you want to try, you can download the dependencies for the architectures without using conda, but I don't recommend it as you will have conflicting versions of python downloaded.
 
-Download anaconda, setup a conda environment (name it test), and set the python version to 3.6.3 (this is very important!!!).
+1. Download anaconda, setup a conda environment (name it test), and set the python version to 3.6.3 (this is very important!!!).
 
-Download the dependencies for Semantic-Segmentation-Suite-master (you can find them in the Semantic-Segmentation-Suite-master github repository) in the conda environment (they require python 3.6.3, which is why you must set it at this verision).
+2. Download the dependencies for Semantic-Segmentation-Suite-master (you can find them in the Semantic-Segmentation-Suite-master github repository) in the conda environment (they require python 3.6.3, which is why you must set it at this verision).
 
-Now that you have setup this environment, setup YoloV7 by installing the correct dependencies. You don't need to use conda for this, just use your regular console/python shell.
+3. Now that you have setup this environment, setup YoloV7 by installing the correct dependencies. You don't need to use conda for this, just use your regular console/python shell.
 
 Step 4:
 
 At this point you should be able to run both architectures (YoloV7 and Semantic-Segmentation-Suite-master). We need to edit the back-end files so it is compatible on your machine.
 
-Navagate to the back-end directory and open app.js. The other files are used for specific functions when training the model (data-preprocessing) so these can be ignored for now.
+1. Navagate to the back-end directory and open app.js. The other files are used for specific functions when training the model (data-preprocessing) so these can be ignored for now.
 
-In app.js, navigate to the line: 
+2. In app.js, navigate to the line: 
 
       "exec(`cd .. && cd Semantic-Segmentation-Suite-master && conda run -n test python predict.py --image ../back-end/${i}.jpg --checkpoint_path image_test/model.ckpt --crop_height 640 --crop_width 640 --model FRRN-A --dataset dataset`, (err) => { "
       
 Ensure that the "conda run -n test" matches your conda environment name (if you did not name it test, replace test with the name).
 
-Navigate to the line:
+3. Navigate to the line:
 
       "exec(`cd .. && cd yolov7 && python detect.py --weights runs/train/zerowaste-lr0_0001-ep100/weights/best.pt --conf 0.25 --save-txt --img-size 640 --source inference/images/${name}`, (err, output) => { "
       
 Make sure that "zerowaste-lr0_0001-ep100" matches the name of the folder you put the YoloV7 weights in. 
 
-We need to also install the dependencies for react. Navigate to front-end/zeroWaste, and run yarn install. If yarn is not installed, install it using npm then try the command again. For each dependency that yarn says it can't find, run the command: yarn add "dependency name" (replace dependency name with the name of the library you are installing). Do this until it has no more dependency issues.
+4. We need to also install the dependencies for react. Navigate to front-end/zeroWaste, and run yarn install. If yarn is not installed, install it using npm then try the command again. For each dependency that yarn says it can't find, run the command: yarn add "dependency name" (replace dependency name with the name of the library you are installing). Do this until it has no more dependency issues.
 
 ✨ Now for the fun stuff ✨
 
